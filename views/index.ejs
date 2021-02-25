@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
-    <%# ここにsample関数を定義して非同期処理中に「ようこそ」以下を表示させたい %>
+    <%# ここにasync-awaitのapi関数を定義して非同期処理中に「ようこそ」以下を表示させたい %>
+
+    <% 
+    async function apiWait(){
+        return await api;
+    } 
+    %>
     <h1 id="title">ようこそ</h1>
     <div id="category">
         <p id="cate"></p>
@@ -19,9 +25,13 @@
     <hr>
     <button id="btn" name="btn">開始</button>
     <div id="answers"></div>
-
-
-    <% if (json){ %>
+    <%# api関数実行 %>
+    <%# apiWait(); %>
+    <% const json2 = apiWait(); %>
+    <% console.log('json2::::'+json2); %>
+    <% console.log('json::::'+json); %>
+    <%# 上の出力：'json2::::[object Promise]' え、json2が返ってこない？？？(jsonはobjectが返ってきている)%>
+    <% if (json) { %>
     <div id="question">
         <% for (let i=0;i<=9;i++){ %>
             <div class="json">
