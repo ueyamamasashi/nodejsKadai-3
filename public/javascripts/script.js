@@ -11,6 +11,7 @@ const btnTo = document.getElementsByClassName('answers');
 const btnToResult = Array.from(btnTo);
 const corrAnsString = "<%= corrAnsArray %>";
 const corrAnsArray = corrAnsString.split(',');
+const asyncAwait = document.getElementById('async');
 
 question.style.display = 'none';
 
@@ -19,7 +20,7 @@ btn.addEventListener('click', ()=>{
     p.innerText = '少々お待ち下さい';
     btn.style.display = 'none';
     cate.innerText = '';
-    question.style.display = 'block';
+    apiWait();
     btnAction();
 });
 
@@ -48,18 +49,18 @@ function btnAction(){
                     json[j].style.display = 'none';
                 };
                 if (i == 9){ 
+                    asyncAwait.style.display = 'block';
                     answers.style.display = 'none';
                     btn.style.display = 'block';
                     diff.innerText = '';
                     cate.innerText = `あなたの正解数は${corAnsC}です`;
                     p.innerText = '再度チャレンジしたい場合は下をクリック';                            
-                    ele.style.display = 'block';                               
-                } else {
-                    json[i+1].style.display= 'block'; 
-                    i++; 
-                }     
-            }; 
-                        
+                    ele.style.display = 'block';
+                } else if (i < 9){            
+                json[i+1].style.display= 'block'; 
+                    i++;
+                };                                         
+            };
         };       
     });
 };   
@@ -72,4 +73,15 @@ const shuffle = ([...array]) => {
         }
     }
     return array;
-}       
+} 
+
+const apiWait = async () => {
+    const res = await fetch('/newapi');
+    console.log('res::'+ res);
+    const json = await res.json();
+    console.log('JSON:::'+json);
+    // TODO:変数jsonの値に従って、JSの流儀でDOMを更新するコードを書く
+    asyncAwait.style.display = 'none';
+    question.style.display = 'block';
+  }
+  
