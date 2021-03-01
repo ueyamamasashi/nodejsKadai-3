@@ -13,7 +13,7 @@ router.get('/', async (req, res, next)=> {
   res.render('index', {
     corrAnsArray: corrAnsArray,
     //api: api(),//async-await関数を作成しfetchするまでindex.ejsを待たせたい（無理っぽい）
-    json: json,
+    //json: json,
 
   });
 });
