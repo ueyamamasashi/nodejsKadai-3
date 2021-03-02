@@ -5,27 +5,32 @@ module.exports = async (apiAddress = 'https://opentdb.com/api.php?amount=10') =>
     const res = await fetch(apiAddress, {
     method: 'get',
     });
-    const json = await res.json();   
-    console.log('json:'+json);   
+    const json = await res.json();
+    console.log(json)      
     quizArray = [];
-    //answersArray = [];
+    answersArray = [];
     for (let i=0; i<=9; i++) {
+        answers1 = [];
         const quiz = new Quiz();
         const quizCount = quiz.getQuizArray(i, json);
-        console.log('quizCount:'+quizCount);
         quizArray.push(quizCount);
-        console.log('quizArray:'+quizArray);
         //以下答え選択肢と正解をシャッフルして配列で返す
-        // quizCount['candidateAns'].push(quizCount['correctAns']);
-        // const answers1 = quizCount['candidateAns'];
-        // const answers = shuffle(answers1);
-        // answersArray.push(answers);
-        // console.log('answersArray:'+answersArray);
+        console.log('quizCount:::'+quizCount[i]['candidateAns'])
+        quizCount[i]['candidateAns'].push(quizCount[i]['correctAns']);
+        answers1 = quizCount[i]['candidateAns'];
+        console.log('typeof1:' + Array.isArray(answers1));
+        const answers = shuffle(answers1);
+        console.log('typeof2:' + Array.isArray(answers));
+        answersArray.push(answers);
+        console.log('answersArray:'+answersArray);
     };
-    return quizArray;       
+    return {
+        'quizArray': quizArray, 
+        'answersArray': answersArray
+    };       
 };
 //答え候補をシャッフル
-const shuffle = ([...array]) => {
+const shuffle = function([...array]) {
     for (let c=0;c<5;c++){
         for (let i = array.length - 1; i >= 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

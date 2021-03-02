@@ -8,6 +8,7 @@
     const asyncAwait = document.getElementById('async');
     
     
+    
     btn.addEventListener('click', ()=>{
         title.style.display = 'block';
         title.innerText = '取得中';
@@ -16,15 +17,17 @@
         cate.innerText = '';
         answer.style.display = 'block';
         const json = apiWait();
-        console.log('json:'+json);
+        const answersArray = answersWait();
+        console.log('json:'+json)
         let corAnsC = 0;
-        makeBtn(json, 0, corAnsC);     
+        makeBtn(json, 0, corAnsC, answersArray);     
             
     });
     
     // 答え選択肢ボタンのonclick処理
-    async function btnAction(j, i, corAnsC){
+    async function btnAction(j, i, corAnsC, answersA){
         const json = await j;
+        const answersArray = await answersA;
         const element = document.getElementsByClassName('answers');
         console.log('element:'+element); 
         const answers = Array.from(element); 
@@ -48,7 +51,7 @@
                         ele.style.display = 'block';
                     } else if (i < 9){            
                         i++;
-                        makeBtn(json, i, corAnsC);
+                        makeBtn(json, i, corAnsC, answersArray);
                     };                                         
                 };
             };
@@ -56,8 +59,9 @@
     };
     
     //addEventListnterクリック時に答え選択肢ボタン作成
-    async function makeBtn(j, i, corAnsC){
+    async function makeBtn(j, i, corAnsC, answersA){
         const json = await j;
+        const answersArray = await answersA;
         console.log(answer.firstChild);
         while (answer.firstChild) {
             answer.removeChild(answer.firstChild);
@@ -66,8 +70,8 @@
         cate.innerText = json[i]['category'];
         diff.innerText = json[i]['difficulty'];
         p.innerText = json[i]['question'];
-        json[i]['candidateAns'].push(json[i]['correctAns']); 
-        const ans1 = json[i]['candidateAns'];
+        console.log('answersArray:::::::'+ answersArray)
+        const ans = answersArray[i];
         //const ans = shuffle(ans1); //答え群をシャッフル
         const ansLength = ans.length;
         for (let j=0; j<= ansLength-1; j++) {
@@ -77,18 +81,9 @@
             ele.style.display = 'block';
             answer.appendChild(ele);      
         };
-        btnAction(json, i, corAnsC);
+        btnAction(json, i, corAnsC, answersArray);
     };
-    //答え候補をシャッフル
-    const shuffle = ([...array]) => {
-        for (let c=0;c<5;c++){
-            for (let i = array.length - 1; i >= 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-        return array;
-    } 
+    
     // fetchを受け取る
     const apiWait = async () => {
         const res = await fetch('/newapi');
@@ -96,5 +91,9 @@
         console.log('JSON:'+json);
         return json;
     }
-    
-  
+    const answersWait = async () => {
+        const res = await fetch('/answers');
+        const answers = await res.json();
+        console.log('answers:'+answers);
+        return answers;
+    }
