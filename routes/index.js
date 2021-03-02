@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { decycle, encycle } = require('json-cyclic'); //TypeError: Converting circular structure to JSONの対応
-const api = require('../newapi');//
+const api = require('../newapi');
 
 router.get('/', async (req, res, next)=> {
   const json = await api();
@@ -11,7 +11,7 @@ router.get('/', async (req, res, next)=> {
     corrAnsArray.push(ans);
   }
   res.render('index', {
-    corrAnsArray: corrAnsArray,
+    //corrAnsArray: corrAnsArray,
     //api: api(),//async-await関数を作成しfetchするまでindex.ejsを待たせたい（無理っぽい）
     //json: json,
 

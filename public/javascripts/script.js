@@ -16,6 +16,7 @@
         cate.innerText = '';
         answer.style.display = 'block';
         const json = apiWait();
+        console.log('json:'+json);
         let corAnsC = 0;
         makeBtn(json, 0, corAnsC);     
             
@@ -67,7 +68,7 @@
         p.innerText = json[i]['question'];
         json[i]['candidateAns'].push(json[i]['correctAns']); 
         const ans1 = json[i]['candidateAns'];
-        const ans = shuffle(ans1); //答え群をシャッフル
+        //const ans = shuffle(ans1); //答え群をシャッフル
         const ansLength = ans.length;
         for (let j=0; j<= ansLength-1; j++) {
             const ele = document.createElement("button");
