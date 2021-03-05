@@ -15,7 +15,7 @@ module.exports = async (apiAddress = 'https://opentdb.com/api.php?amount=10') =>
         const quizCount = quiz.getQuizArray(i, json);
         quizArray.push(quizCount);
         //以下答え選択肢と正解をシャッフルして配列で返す
-        console.log('quizCount:::'+quizCount[i]['candidateAns'])
+        console.log('correctAnwser:::'+quizCount[i]['correctAns'])
         quizCount[i]['candidateAns'].push(quizCount[i]['correctAns']);
         answers1 = quizCount[i]['candidateAns'];
         console.log('typeof1:' + Array.isArray(answers1));
