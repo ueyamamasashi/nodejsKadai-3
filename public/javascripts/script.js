@@ -73,7 +73,7 @@
         diff.innerText = json[0][i]['difficulty'];
         p.innerText = json[0][i]['question'];
         const correctAns = json[0][i]['correctAns']; //ここで正解を変数に入れて次の関数に引き渡す
-        console.log('answersArray:::::::'+ json[1][i])
+        console.log('correctAns:'+correctAns);
         const ans = json[1][i];
         //const ans = answersArray[i];
         const ansLength = ans.length;

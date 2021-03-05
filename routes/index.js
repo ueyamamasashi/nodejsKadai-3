@@ -19,8 +19,9 @@ router.get('/', async (req, res, next)=> {
 });
 // 新しいエンドポイントを増設
 router.get('/newapi', async (req, res) => {
-  const jsonApi = (await api()).quizArray;
-  const answers = (await api()).answersArray;
+  const apiFunc = await api();
+  const jsonApi = apiFunc.quizArray;
+  const answers = apiFunc.answersArray;
   const jsonApiAnswers = [];
   jsonApiAnswers.push(jsonApi);
   jsonApiAnswers.push(answers);
